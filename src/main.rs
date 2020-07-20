@@ -4,9 +4,9 @@
 
 #[get("/")]
 fn index() -> &'static str {
-    "Landing Page"
+  "Landing Page"
 }
 
 fn main() {
-    rocket::ignite().mount("/", routes![index]).launch();
+  rocket::ignite().mount("/", routes![index]).launch();
 }
