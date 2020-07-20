@@ -18,9 +18,12 @@ fn index() -> Template {
     last_name: String::from("Don")
   };
 
-  Template::render("index", context)
+  Template::render("home", context)
 }
 
 fn main() {
-  rocket::ignite().mount("/", routes![index]).launch();
+  rocket::ignite()
+    .mount("/", routes![index])
+    .attach(Template::fairing())
+    .launch();
 }
