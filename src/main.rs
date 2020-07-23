@@ -7,7 +7,7 @@ use serde::Serialize;
 
 #[get("/")]
 fn index() -> Template {
-  #[derive(Serialize, Debug)]
+  #[derive(Serialize)]
   struct Context {
     first_name: String,
     last_name: String
