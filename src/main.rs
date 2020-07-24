@@ -4,6 +4,7 @@
 
 use rocket::{Request, response::content};
 use rocket::request::Form;
+use rocket::response::{Flash, Redirect};
 use rocket_contrib::templates::Template;
 use serde::Serialize;
 
@@ -44,14 +45,25 @@ fn not_found(req: &Request) -> String {
     format!("Oh no! We couldn't find the requested path '{}'", req.uri())
 }
 
+// #[post("/book", data = "<book_form>")]
+// fn new_book(book_form: Form<Book>) -> content::Json<&'static str> {
+//   let book: Book = book_form.into_inner();
+
+//   print!("{}", book.title);
+//   content::Json("{
+//     'stuff' 'yolo'
+//   }")
+// }
+
 #[post("/book", data = "<book_form>")]
-fn new_book(book_form: Form<Book>) -> content::Json<&'static str> {
+fn new_book(book_form: Form<Book>) -> Flash<Redirect> {
   let book: Book = book_form.into_inner();
 
-  print!("{}", book.title);
-  content::Json("{
-    'stuff' 'yolo'
-  }")
+  if book.title.is_empty() {
+    Flash::error(Redirect::to("/book"), "Title is required!")
+  } else {
+    Flash::error(Redirect::to("/book"), "Server error.")
+  }
 }
 
 fn main() {
