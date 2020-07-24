@@ -2,6 +2,8 @@
 
 #[macro_use] extern crate rocket;
 
+use rocket::response::content;
+use rocket::Request;
 use rocket_contrib::templates::Template;
 use serde::Serialize;
 
@@ -21,9 +23,23 @@ fn index() -> Template {
   Template::render("home", context)
 }
 
+#[get("/api")]
+fn api() -> content::Json<&'static str> {
+  content::Json("{
+    'status': 'success',
+    'message': 'Hello API!'
+  }")
+}
+
+#[catch(404)]
+fn not_found(req: &Request) -> String {
+    format!("Oh no! We couldn't find the requested path '{}'", req.uri())
+}
+
 fn main() {
   rocket::ignite()
-    .mount("/", routes![index])
+    .register(catchers![not_found])
+    .mount("/", routes![index, api])
     .attach(Template::fairing())
     .launch();
 }
