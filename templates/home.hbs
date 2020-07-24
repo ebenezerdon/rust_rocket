@@ -2,6 +2,7 @@
   <style type="text/css">
     body {
       background: #1a6875;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     .left-side {
@@ -12,24 +13,13 @@
       left: 0;
     }
 
-    .left-side h1 {
+    .title {
       color: #fff;
-      font-family: Arial, Helvetica, sans-serif;
       font-size: 5em;
     }
 
-    .click-me-button {
-      font-size: 2em;
-      border: unset;
-      border-radius: 25px;
-      cursor: pointer;
-      outline:none;
-      padding: 0 0.5em;
-      margin-right: 0.5em;
-    }
-
-    .click-me-button:active {
-      transform: translateY(2px);
+    .sub-title {
+      color: #fff;
     }
 
     .right-side {
@@ -47,7 +37,7 @@
 <body>
   <div class="left-side">
     <h1 class="title">This web app was built with RUST</h1>
-    <button class="click-me-button">Click me😊</button>
+    <h3 class="sub-title">Hello {{first_name}} {{last_name}}😊</h3>
   </div>
   <div class="right-side">
     <div class="round-image"></div>
