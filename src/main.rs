@@ -8,7 +8,7 @@ use rocket::response::{Flash, Redirect};
 use rocket_contrib::templates::Template;
 use serde::Serialize;
 
-#[derive(FromForm)]
+#[derive(FromForm, Debug)]
 struct Book {
   title: String,
   author: String,
@@ -58,11 +58,14 @@ fn not_found(req: &Request) -> String {
 #[post("/book", data = "<book_form>")]
 fn new_book(book_form: Form<Book>) -> Flash<Redirect> {
   let book: Book = book_form.into_inner();
+  let mut dummy_db: Vec<Book> = Vec::new();
 
-  if book.title.is_empty() {
+  if book.title.is_empty() | book.author.is_empty() | book.isbn.is_empty() {
     Flash::error(Redirect::to("/book"), "Title is required!")
   } else {
-    Flash::error(Redirect::to("/book"), "Server error.")
+    dummy_db.push(book);
+    print!("{:?}", dummy_db);
+    Flash::success(Redirect::to("/book"), "Book succssfully added!")
   }
 }
 
