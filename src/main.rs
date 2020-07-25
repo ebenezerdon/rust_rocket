@@ -64,8 +64,7 @@ fn new_book(book_form: Form<Book>) -> Flash<Redirect> {
     Flash::error(Redirect::to("/book"), "Title is required!")
   } else {
     dummy_db.push(book);
-    print!("{:?}", dummy_db);
-    Flash::success(Redirect::to("/book"), "Book succssfully added!")
+    Flash::success(Redirect::to("/book"), format!("Book added Successfully: {:?}", dummy_db))
   }
 }
 
