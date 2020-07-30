@@ -1,8 +1,9 @@
-#![feature(proc_macro_hygiene, decl_macro)]
+#![feature(decl_macro)]
 
 #[macro_use] extern crate rocket;
 
-use rocket::{Request, response::content};
+use rocket::Request;
+use rocket::response::content::Json;
 use rocket::request::Form;
 use rocket_contrib::templates::Template;
 use serde::Serialize;
@@ -23,16 +24,16 @@ fn index() -> Template {
   }
 
   let context = Context {
-    first_name: String::from("Ebenezer"),
-    last_name: String::from("Don")
+    first_name: String::from("Jane"),
+    last_name: String::from("Doe")
   };
 
   Template::render("home", context)
 }
 
 #[get("/hello")]
-fn hello() -> content::Json<&'static str> {
-  content::Json("{
+fn hello() -> Json<&'static str> {
+  Json("{
     'status': 'success',
     'message': 'Hello API!'
   }")
